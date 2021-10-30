@@ -29,6 +29,14 @@ async function run() {
           res.json(userCamp);
       });
 
+//GET ALL SPECIFIC DATA 
+      app.get('/capming/:id', async(req, res) =>{
+        const id = req.params.id;
+        const userCamp =  {_id: ObjectId(id)};
+        const user = await campCollact.findOne(userCamp);
+          res.json(user);
+      });
+
       ////GET User DATA
       app.get('/user', async(req, res) =>{
         const camp = campCollaction.find({});
