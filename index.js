@@ -1,0 +1,76 @@
+const express = require('express');
+const app = express();
+require('dotenv').config();
+
+const ObjectId = require('mongodb').ObjectId;
+const cors = require('cors');
+const port = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
+
+//MONGODB CONECT
+const { MongoClient } = require('mongodb');
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.89jki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// console.log(uri)
+
+async function run() {
+    try {
+      await client.connect();
+      const database = client.db('camp_data');
+      const campCollaction = database.collection('data');
+      const campCollact = database.collection('store');
+
+//GET ALL DATA
+      app.get('/capming', async(req, res) =>{
+        const camp = campCollact.find({});
+        const userCamp = await camp.toArray();
+          res.json(userCamp);
+      });
+
+      ////GET User DATA
+      app.get('/user', async(req, res) =>{
+        const camp = campCollaction.find({});
+        const userCamp = await camp.toArray();
+          res.json(userCamp);
+      });
+
+// GET DELETE SERVICE
+app.delete('/user/:id', async(req, res) =>{
+  const id = req.params.id;
+  // console.log('getting specific id', id);
+  const query = {_id: ObjectId(id)};
+  // console.log(query)
+  const campService = await campCollaction.deleteOne(query);
+  
+  res.json(campService)
+});
+
+//GET POST API
+app.post('/users', async(req, res)=>{
+  const service = req.body;
+  const allUsers = await campCollaction.insertOne(service);
+//  console.log('delete', allUsers)
+  res.json(allUsers);
+});
+
+     
+    } finally {
+      // Ensures that the client will close when you finish/error
+    //   await client.close();
+    };
+  };
+  run().catch(console.dir);
+
+
+
+//cheack connectin server
+app.get('/', (req, res) =>{
+    console.log('server is open');
+    res.send('hit api');
+});
+
+app.listen(port, () =>{
+    console.log('camping server running', port);
+});
