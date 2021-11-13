@@ -57,7 +57,6 @@ app.delete('/user/:id', async(req, res) =>{
 app.post('/users', async(req, res)=>{
   const service = req.body;
   const allUsers = await campCollaction.insertOne(service);
-//  console.log('delete', allUsers)
   res.json(allUsers);
 });
 
