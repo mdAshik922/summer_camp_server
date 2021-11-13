@@ -21,6 +21,7 @@ async function run() {
       const database = client.db('camp_data');
       const campCollaction = database.collection('data');
       const campCollact = database.collection('store');
+      const orderCollact = database.collection('order');
 
 //GET ALL DATA
       app.get('/capming', async(req, res) =>{
@@ -63,6 +64,20 @@ app.post('/users', async(req, res)=>{
   res.json(allUsers);
 });
 
+//GET POST API
+app.post('/order', async(req, res)=>{
+  const order = req.body;
+  const allOrder = await orderCollaction.insertOne(order);
+//  console.log('delete', allUsers)
+  res.json(allOrder);
+});
+
+  ////GET User DATA
+  app.get('/order', async(req, res) =>{
+    const campOrder = orderCollaction.find({});
+    const userCamp = await campOrder.toArray();
+      res.json(userCamp);
+  });
      
     } finally {
       // Ensures that the client will close when you finish/error
