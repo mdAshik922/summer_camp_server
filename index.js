@@ -48,11 +48,8 @@ async function run() {
 // GET DELETE SERVICE
 app.delete('/user/:id', async(req, res) =>{
   const id = req.params.id;
-  // console.log('getting specific id', id);
   const query = {_id: ObjectId(id)};
-  // console.log(query)
   const campService = await campCollaction.deleteOne(query);
-  
   res.json(campService)
 });
 
@@ -78,6 +75,15 @@ app.post('/order', async(req, res)=>{
       res.json(userCamp);
   });
      
+// GET DELETE SERVICE
+app.delete('/order/:id', async(req, res) =>{
+  const id = req.params.id;
+  const query = {_id: ObjectId(id)};
+  const campOrder = await orderCollact.deleteOne(query);
+  
+  res.json(campOrder)
+});
+
     } finally {
       // Ensures that the client will close when you finish/error
     //   await client.close();
