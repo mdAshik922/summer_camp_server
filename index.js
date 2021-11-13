@@ -67,6 +67,7 @@ app.post('/users', async(req, res)=>{
 //GET POST API
 app.post('/orders', async(req, res)=>{
   const order = req.body;
+
   const allOrder = await orderCollact.insertOne(order);
   res.json(allOrder);
 });
@@ -74,7 +75,7 @@ app.post('/orders', async(req, res)=>{
   ////GET User DATA
   app.get('/order', async(req, res) =>{
     const campOrder = orderCollaction.find({});
-    const userCamp = await orderCollact.toArray();
+    const userCamp = await campOrder.toArray();
       res.json(userCamp);
   });
      
