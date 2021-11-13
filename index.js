@@ -65,17 +65,16 @@ app.post('/users', async(req, res)=>{
 });
 
 //GET POST API
-app.post('/order', async(req, res)=>{
+app.post('/orders', async(req, res)=>{
   const order = req.body;
-  const allOrder = await orderCollaction.insertOne(order);
-//  console.log('delete', allUsers)
+  const allOrder = await orderCollact.insertOne(order);
   res.json(allOrder);
 });
 
   ////GET User DATA
   app.get('/order', async(req, res) =>{
     const campOrder = orderCollaction.find({});
-    const userCamp = await campOrder.toArray();
+    const userCamp = await orderCollact.toArray();
       res.json(userCamp);
   });
      
