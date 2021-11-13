@@ -65,7 +65,7 @@ app.post('/users', async(req, res)=>{
 });
 
 //GET POST API
-app.post('/orders', async(req, res)=>{
+app.post('/order', async(req, res)=>{
   const order = req.body;
 
   const allOrder = await orderCollact.insertOne(order);
